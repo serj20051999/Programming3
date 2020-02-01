@@ -1,5 +1,6 @@
+var LivingCreuture = require("./LivingCreuture.js")
 
-class Change extends LivingCreuture{
+module.exports = class Change extends LivingCreuture{
     constructor(x, y) {
         super(x,y)
         this.energy = 5;

@@ -1,4 +1,6 @@
-class Grass extends LivingCreuture{
+var LivingCreuture = require("./LivingCreuture.js")
+
+module.exports = class Grass extends LivingCreuture{
   
     mul() {
         this.energy++;

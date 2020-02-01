@@ -1,4 +1,6 @@
-class Monster extends LivingCreuture{
+var LivingCreuture = require("./LivingCreuture.js")
+
+module.exports = class Monster extends LivingCreuture{
     constructor(x, y) {
         super(x,y)
         this.energy = 5;
