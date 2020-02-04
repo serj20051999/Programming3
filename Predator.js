@@ -20,7 +20,8 @@ module.exports = class Predator extends LivingCreuture{
         ];
     }
     mul() {
-        let newCell = random(this.chooseCell(0));
+        let chooseCells = this.chooseCell(0);
+        let newCell = chooseCells[Math.floor(Math.random() * chooseCells.length)]
         if (newCell) {
             let x = newCell[0];
             let y = newCell[1];
@@ -40,7 +41,8 @@ module.exports = class Predator extends LivingCreuture{
     }
     eat() {
         this.getNewDirections();
-        let newCell = random(this.chooseCell(2));
+        let chooseCells = this.chooseCell(2);
+        let newCell = chooseCells[Math.floor(Math.random() * chooseCells.length)]
         if (newCell) {
             this.energy += 20;
             let x = newCell[0];
@@ -65,7 +67,8 @@ module.exports = class Predator extends LivingCreuture{
     }
     move() {
         this.energy--;
-        let newCell = random(this.chooseCell(0));
+        let chooseCells = this.chooseCell(0);
+        let newCell = chooseCells[Math.floor(Math.random() * chooseCells.length)]
         if (newCell) {
             let x = newCell[0];
             let y = newCell[1];

@@ -49,7 +49,8 @@ module.exports = class Change extends LivingCreuture{
 
     move() {
         this.energy--;
-        let newCell = random(this.chooseCell(0));
+        let chooseCells = this.chooseCell(0);
+        let newCell = chooseCells[Math.floor(Math.random() * chooseCells.length)]
         if (newCell) {
             let x = newCell[0];
             let y = newCell[1];
@@ -69,7 +70,8 @@ module.exports = class Change extends LivingCreuture{
     change() {
 
         this.getNewDirections();
-        var newCell = random(this.chooseCell(3));
+        let chooseCells = this.chooseCell(3);
+        let newCell = chooseCells[Math.floor(Math.random() * chooseCells.length)]
 
         if (newCell) {
             this.energy += 5;
@@ -78,12 +80,6 @@ module.exports = class Change extends LivingCreuture{
 
             matrix[y][x] = 2;
 
-
-
-
-
-
-
             for (let index = 0; index < predatorArr.length; index++) {
                 if (predatorArr[index].x == x && predatorArr[index].y == y) {
                     predatorArr.splice(index, 1)
@@ -91,22 +87,16 @@ module.exports = class Change extends LivingCreuture{
                     grassEaterArr.push(newgrassEater)
                 }
             }
-
-
-
-
             if (this.energy > 5) {
                 this.mul()
             }
-
-
-
         }
         else { this.move() }
     }
     mul() {
 
-        var newCell = random(this.chooseCell(0));
+        let chooseCells = this.chooseCell(0);
+        let newCell = chooseCells[Math.floor(Math.random() * chooseCells.length)]
 
         if (this.energy >= 10 && newCell) {
             var newchangerArr = new Change(newCell[0], newCell[1]);
