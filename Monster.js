@@ -70,45 +70,30 @@ module.exports = class Monster extends LivingCreuture {
         }
     }
     eat() {
-
         this.getNewCoordinates();
-        let chooseCells = this.chooseCell(3);
-        var chooseCells2 = this.chooseCell(4);
-        let newCell1 = chooseCells[Math.floor(Math.random() * chooseCells.length)];
-        let newCell2 = chooseCells2[Math.floor(Math.random() * chooseCells2.length)];
-        if (newCell1 !== undefined && newCell2 !== undefined) {
-            var m = newCell1.concat(newCell2);
-            var newCell = [];
-    
-            var d = m[Math.floor(Math.random() * m.length)];
-            var o = m[Math.floor(Math.random() * m.length)];
-            newCell.push(d);
-            newCell.push(o);
-           
+        let chooseCells = this.chooseCell(4);
+        let newCell = chooseCells[Math.floor(Math.random() * chooseCells.length)]
+        if (newCell) {
+            this.energy += 20;
+            let x = newCell[0];
+            let y = newCell[1];
+            matrix[y][x] = 5;
+            matrix[this.y][this.x] = 0;
 
-            if (newCell) {
-                
-                this.energy += 20;
-                let x = newCell[0];
-                let y = newCell[1];
-                matrix[y][x] = 5;
-                matrix[this.y][this.x] = 0;
+            this.y = y;
+            this.x = x;
 
-                this.y = y;
-                this.x = x;
-
-                for (let index = 0; index < monsterArr.length; index++) {
-                    if (monsterArr[index].x == x && monsterArr[index].y == y) {
-                        monsterArr.splice(index, 1)
-                    }
-                }
-
-                if (this.energy > 60) {
-                    this.mul()
+            for (let index = 0; index < changerArr.length; index++) {
+                if (changerArr[index].x == x && changerArr[index].y == y) {
+                    changerArr.splice(index, 1)
                 }
             }
-            else { this.move() }
+
+            if (this.energy > 60) {
+                this.mul()
+            }
         }
+        else { this.move() }
     }
     mul() {
 

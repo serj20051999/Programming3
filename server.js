@@ -53,6 +53,11 @@ grassEaterArr = [];
 predatorArr = [];
 changerArr = [];
 monsterArr = [];
+grassHashiv = 0;
+grassEaterHashiv = 0;
+predatorHashiv = 0;
+weather = "Summer";
+weatherCount = 1;
 matrix = []
 
 Grass = require("./Grass.js");
@@ -68,14 +73,17 @@ for (let y = 0; y < matrix.length; y++) {
         if (matrix[y][x] == 1) {
             let grass = new Grass(x, y);
             grassArr.push(grass);
+            grassHashiv++;
         }
         else if (matrix[y][x] == 2) {
             let grassEater = new GrassEater(x, y);
             grassEaterArr.push(grassEater);
+            grassEaterHashiv++
         }
         else if (matrix[y][x] == 3) {
             let predator = new Predator(x, y);
             predatorArr.push(predator);
+            predatorHashiv++
         }
         else if (matrix[y][x] == 4) {
             let changer = new Change(x, y);
@@ -85,6 +93,25 @@ for (let y = 0; y < matrix.length; y++) {
             let monster = new Monster(x, y);
             monsterArr.push(monster);
         }
+    }
+}
+
+function getWeather(){
+    weatherCount++
+    if(weatherCount == 5){
+        weatherCount = 1;
+    }
+    else if(weatherCount == 4){
+        weatherCount = "Winter";
+    }
+    else if(weatherCount == 3){
+        weatherCount = "Autumn";
+    }
+    else if(weatherCount == 2){
+        weatherCount = "Spring";
+    }
+    else if(weatherCount == 1){
+        weatherCount = "Summer";
     }
 }
 
@@ -112,9 +139,19 @@ function drawserver() {
     if (monsterArr[0] !== undefined) {
         for (let index = 0; index < monsterArr.length; index++) {
             monsterArr[index].eat();
+            
+            
         }
     }
-    io.sockets.emit("matrix", matrix);
+    let sendData = {
+        matrix: matrix,
+        grassCounter: grassHashiv,
+        grassEaterCounter: grassEaterHashiv,
+        predatorCounter:  predatorHashiv
+    }
+
+    //! Send data over the socket to clients who listens "data"
+    io.sockets.emit("data", sendData);
 }
 
 setInterval(drawserver, 500)

@@ -7,12 +7,19 @@ function setup() {
 
     matrix = [];
 
-    socket.on("matrix", drawMatrix)
+    let grassCountElement = document.getElementById('grassCount');
+    let grassEaterCountElement = document.getElementById('grassEaterCount');
+    let predatorCountElement = document.getElementById('predatorCount');
 
-    function drawMatrix(matrix) {
+    socket.on("data", drawMatrix)
+
+    function drawMatrix(data) {
 
 
-        matrix = matrix;
+        matrix = data.matrix;
+        grassCountElement.innerText = data.grassCounter;
+        grassEaterCountElement.innerText = data.grassEaterCounter;
+        predatorCountElement.innerText = data.predatorCounter;
 
         createCanvas(matrix[0].length * side, matrix.length * side)
 

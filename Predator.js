@@ -29,6 +29,7 @@ module.exports = class Predator extends LivingCreuture{
             let predator = new Predator(x, y);
             predatorArr.push(predator);
             this.energy = 0;
+            predatorHashiv++
         }
     }
     die() {
@@ -36,6 +37,7 @@ module.exports = class Predator extends LivingCreuture{
         for (let index = 0; index < predatorArr.length; index++) {
             if (predatorArr[index].x == this.x && predatorArr[index].y == this.y) {
                 predatorArr.splice(index, 1)
+                predatorHashiv--
             }
         }
     }
@@ -56,6 +58,7 @@ module.exports = class Predator extends LivingCreuture{
             for (let index = 0; index < grassEaterArr.length; index++) {
                 if (grassEaterArr[index].x == x && grassEaterArr[index].y == y) {
                     grassEaterArr.splice(index, 1)
+                    grassEaterHashiv--
                 }
             }
 

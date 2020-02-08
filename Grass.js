@@ -13,6 +13,7 @@ module.exports = class Grass extends LivingCreuture{
             let grass = new Grass(x, y);
             grassArr.push(grass);
             this.energy = 0;
+            grassHashiv++
         }
     }
 }

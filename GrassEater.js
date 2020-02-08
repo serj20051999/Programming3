@@ -28,6 +28,7 @@ module.exports = class GrassEater extends LivingCreuture{
             matrix[y][x] = 2;
             let grassEater = new GrassEater(x, y);
             grassEaterArr.push(grassEater);
+            grassEaterHashiv++
             this.energy = 0;
         }
     }
@@ -36,6 +37,7 @@ module.exports = class GrassEater extends LivingCreuture{
         for (let index = 0; index < grassEaterArr.length; index++) {
             if (grassEaterArr[index].x == this.x && grassEaterArr[index].y == this.y) {
                 grassEaterArr.splice(index, 1)
+                grassEaterHashiv--
             }
         }
     }
@@ -57,6 +59,7 @@ module.exports = class GrassEater extends LivingCreuture{
             for (let index = 0; index < grassArr.length; index++) {
                 if (grassArr[index].x == x && grassArr[index].y == y) {
                     grassArr.splice(index, 1)
+                    grassHashiv--
                 }
             }
 

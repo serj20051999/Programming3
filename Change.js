@@ -83,8 +83,10 @@ module.exports = class Change extends LivingCreuture{
             for (let index = 0; index < predatorArr.length; index++) {
                 if (predatorArr[index].x == x && predatorArr[index].y == y) {
                     predatorArr.splice(index, 1)
+                    predatorHashiv--
                     var newgrassEater = new GrassEater(x, y);
                     grassEaterArr.push(newgrassEater)
+                    grassEaterHashiv++
                 }
             }
             if (this.energy > 5) {
