@@ -57,7 +57,7 @@ grassHashiv = 0;
 grassEaterHashiv = 0;
 predatorHashiv = 0;
 weather = "Summer";
-weatherCount = 1;
+weatherinit = 0;
 matrix = []
 
 Grass = require("./Grass.js");
@@ -95,24 +95,26 @@ for (let y = 0; y < matrix.length; y++) {
         }
     }
 }
+function getWeather() {
+    weatherinit++;
+    if (weatherinit == 1) {
+        weather = "Summer"
+    }
+    
+    else if (weatherinit == 2) {
+        weather = "Spring"
+    }
+    else if (weatherinit == 3) {
+        weather = "Autumn"
+    }
+    else if (weatherinit == 4) {
+        weather = "Winter"
+    }
+    else  {
+        weatherinit = 1
+    }
 
-function getWeather(){
-    weatherCount++
-    if(weatherCount == 5){
-        weatherCount = 1;
-    }
-    else if(weatherCount == 4){
-        weatherCount = "Winter";
-    }
-    else if(weatherCount == 3){
-        weatherCount = "Autumn";
-    }
-    else if(weatherCount == 2){
-        weatherCount = "Spring";
-    }
-    else if(weatherCount == 1){
-        weatherCount = "Summer";
-    }
+
 }
 
 function drawserver() {
@@ -139,19 +141,23 @@ function drawserver() {
     if (monsterArr[0] !== undefined) {
         for (let index = 0; index < monsterArr.length; index++) {
             monsterArr[index].eat();
-            
-            
+
+
         }
     }
+    io.sockets.emit("data", sendData);
     let sendData = {
         matrix: matrix,
         grassCounter: grassHashiv,
         grassEaterCounter: grassEaterHashiv,
-        predatorCounter:  predatorHashiv
+        predatorCounter: predatorHashiv,
+        weatherserver: weather
     }
 
-    //! Send data over the socket to clients who listens "data"
-    io.sockets.emit("data", sendData);
+   
+   
 }
 
-setInterval(drawserver, 500)
+
+setInterval(getWeather, 3000);
+setInterval(drawserver, 1000)

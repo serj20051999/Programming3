@@ -10,7 +10,8 @@ function setup() {
     let grassCountElement = document.getElementById('grassCount');
     let grassEaterCountElement = document.getElementById('grassEaterCount');
     let predatorCountElement = document.getElementById('predatorCount');
-
+    let clientwheater = document.getElementById("weatherClient");
+    
     socket.on("data", drawMatrix)
 
     function drawMatrix(data) {
@@ -20,6 +21,7 @@ function setup() {
         grassCountElement.innerText = data.grassCounter;
         grassEaterCountElement.innerText = data.grassEaterCounter;
         predatorCountElement.innerText = data.predatorCounter;
+        clientwheater.innerText = data.weatherserver;
 
         createCanvas(matrix[0].length * side, matrix.length * side)
 
@@ -30,7 +32,21 @@ function setup() {
             for (let x = 0; x < element.length; x++) {
 
                 if (matrix[y][x] == 1) {
-                    fill('green')
+                    
+                    if(data.weatherserver == "Winter"){
+                        fill('white')
+                    }
+                    else if(data.weatherserver == "Autumn"){
+                        fill('darkgreen') 
+                    }
+                    else if(data.weatherserver == "Spring"){
+                        fill('#90ee90') 
+                    }
+                    else if(data.weatherserver == "Summer"){
+                        fill('green') 
+                    }
+                    
+
                 }
                 else if (matrix[y][x] == 2) {
                     fill('yellow')
