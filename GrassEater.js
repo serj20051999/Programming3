@@ -62,10 +62,27 @@ module.exports = class GrassEater extends LivingCreuture{
                     grassHashiv--
                 }
             }
-
-            if (this.energy > 40) {
-                this.mul()
+            if (weather == "Spring") {
+                if (this.energy > 40) {
+                    this.mul()
+                }
             }
+            else if (weather == "Summer") {
+                if (this.energy > 20) {
+                    this.mul()
+                }
+            }
+            else if (weather == "Winter") {
+                if (this.energy > 100) {
+                    this.mul()
+                }
+            }
+            else if (weather == "Autumn") {
+                if (this.energy > 50) {
+                    this.mul()
+                }
+            }
+           
         }
         else { this.move() }
     }

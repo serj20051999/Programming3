@@ -89,8 +89,25 @@ module.exports = class Monster extends LivingCreuture {
                 }
             }
 
-            if (this.energy > 60) {
-                this.mul()
+            if (weather == "Spring") {
+                if (this.energy > 60) {
+                    this.mul()
+                }
+            }
+            else if (weather == "Summer") {
+                if (this.energy > 40) {
+                    this.mul()
+                }
+            }
+            else if (weather == "Winter") {
+                if (this.energy > 90) {
+                    this.mul()
+                }
+            }
+            else if (weather == "Autumn") {
+                if (this.energy > 30) {
+                    this.mul()
+                }
             }
         }
         else { this.move() }

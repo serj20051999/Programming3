@@ -1,88 +1,165 @@
 <html>
-   <head>
-   
 
-       <style>
-            #legend {position: absolute;top: 0;right: 0;width: 800px;} .legend-color {width: 30px;height: 30px;} td {border: 1px solid black; font-size: 14px; padding-left: 5px;}
-        </style>
-   </head>
-   <body>
-        <h1>Հիմա <span id="weatherClient"></span> է</h1>
-        <table id="legend">
+<head>
+
+
+    <style>
+        #toggle{ position: fixed;
+            left: 50%;
+            bottom: 2em;}
+            #toggle1{
+                position: fixed;
+            left: 30%;
+            bottom: 2em;}
+            #toggle2{
+                position: fixed;
+            left: 40%;
+            bottom: 2em;}
+
+        #legend {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 800px;
+        }
+
+        .legend-color {
+            width: 30px;
+            height: 30px;
+        }
+
+        td {
+            border: 1px solid black;
+            font-size: 14px;
+            padding-left: 5px;
+        }
+    </style>
+</head>
+
+<body>
+        <audio id="myAudio">
+                <source src="t-rex-roar.ogg" type="audio/ogg">
+                <source src="t-rex-roar.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+              </audio>
+    <h1>Հիմա <span id="weatherClient"></span> է</h1>
+    <script src="https://unpkg.com/magic-snowflakes/dist/snowflakes.js"></script>
+    <button id="toggle">Snow</button>
+    <script>
+        (function () {
+            var isStart = true,
+                button = document.querySelector('#toggle')
+                sf = new Snowflakes({
+                    minSize: 10,
+                    maxSize: 100,
+                    color: 'blue',
+                    wind: false
+                });
+
+            button.onclick = function () {
+                
+
+                if (isStart) {
+                    sf.stop();
+                    button.innerHTML = 'Start';
+                } else {
+                    sf.start();
+                    button.innerHTML = 'Stop';
+                }
+
+                isStart = !isStart;
+            };
+        })();
+    </script>
+    <button id="toggle1" onclick="playAudio()">Play Music</button>
+    <button id="toggle2" onclick="pauseAudio()">Pouse Music</button>
+    <script>
+            var x = document.getElementById("myAudio"); 
             
-                <tr>
-                    <td class="legend-color">Գույն</td>
-                    <td>Անվանում</td>
-                    <td>Շարժվում է</td>
-                    <td>Ուտում է</td>
-                    <td>Բազմանում է</td>
-                    <td>Սատկում է</td>
-                    <td>Քանակ</td>
+            function playAudio() { 
+              x.play(); 
+            } 
+            
+            function pauseAudio() { 
+              x.pause(); 
+            } 
+            </script>
+    <table id="legend">
 
-                </tr>
-        
-                <tr>
-                    <td class="legend-color" style="background-color:gray"></td>
-                    <td>Դատարկ վանդակներ</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td class="legend-color" style="background-color:green"></td>
-                    <td>Խոտ</td>
-                    <td></td>
-                    <td></td>
-                    <td>Մոտակա 8 վանդակներում, 8 տակտը մեկ</td>
-                    <td></td>
-                    <td id="grassCount"></td>
-                </tr>
-                <tr>
-                    <td class="legend-color" style="background-color:yellow"></td>
-                    <td>Խոտակեր</td>
-                    <td>Մոտակա 8 վանդակներում, էներգիան քչանում է 1֊ով</td>
-                    <td>Խոտերին, մոտակա 8 վանդակներում, շարժվելիս էներգիան ավելանում է 2֊ով</td>
-                    <td>Բազմանում է մոտակա տարածքներում, երբ էներգիան հավասար է 7-ի</td>
-                    <td>Սատկում է, երբ էներգիան փոքր է 0֊ից</td>
-                    <td id="grassEaterCount"></td>
-                </tr>
-                <tr>
-                    <td class="legend-color" style="background-color:red"></td>
-                    <td>Գիշատիչ</td>
-                    <td>Մոտակա 8 վանդակներում, էներգիան քչանում է 2֊ով</td>
-                    <td>Խոտակերներին, մոտակա 8 վանդակներում, շարժվելիս էներգիան ավելանում է 3֊ով</td>
-                    <td>Բազմանում է մոտակա տարածքներում, երբ էներգիան 10֊ից ավել է</td>
-                    <td>Սատկում է, երբ էներգիան փոքր է 0֊ից</td>
-                    <td id="predatorCount"></td>
-                </tr>
+        <tr>
+            <td class="legend-color">Գույն</td>
+            <td>Անվանում</td>
+            <td>Շարժվում է</td>
+            <td>Ուտում է</td>
+            <td>Բազմանում է</td>
+            <td>Սատկում է</td>
+            <td>Քանակ</td>
 
-                <tr>
-                        <td class="legend-color" style="background-color:cyan"></td>
-                        <td>Կերպար 1</td>
-                        <td>Մոտակա 16 վանդակներում, էներգիան քչանում է 1֊ով</td>
-                        <td>Գիշատիչներին, մոտակա 16 վանդակներում, շարժվելիս էներգիան ավելանում է 2֊ով,
-                            հպվելով գիշատիչներին վերջիններս դարձնում է խոտակեր
-                        </td>
-                        <td>Բազմանում է մոտակա տարածքներում, երբ էներգիան 10֊ից ավել է</td>
-                        <td>Սատկում է, երբ էներգիան փոքր է 0֊ից</td>
-                        <td></td>
-                    </tr>
+        </tr>
 
-                    <tr>
-                            <td class="legend-color" ></td>
-                            <td>Կերպար 2</td>
-                            <td>Մոտակա 16 վանդակներում, էներգիան քչանում է 1֊ով</td>
-                            <td>Գիշատիչին և կերպար 1-ին, մոտակա 16 վանդակներում, շարժվելիս էներգիան ավելանում է 3֊ով</td>
-                            <td>Բազմանում է մոտակա տարածքներում, երբ էներգիան 8֊ից ավել է</td>
-                            <td>Սատկում է, երբ էներգիան փոքր է 0֊ից</td>
-                            <td></td>
-                        </tr>  
-                        
-            </table>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.14/p5.js"></script>
-            <script src="/socket.io/socket.io.js"></script>
-            <script src="script.js"></script>
-   </body>
+        <tr>
+            <td class="legend-color" style="background-color:gray"></td>
+            <td>Դատարկ վանդակներ</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td class="legend-color" style="background-color:green"></td>
+            <td>Խոտ</td>
+            <td></td>
+            <td></td>
+            <td>Մոտակա 8 վանդակներում, 8 տակտը մեկ</td>
+            <td></td>
+            <td id="grassCount"></td>
+        </tr>
+        <tr>
+            <td class="legend-color" style="background-color:yellow"></td>
+            <td>Խոտակեր</td>
+            <td>Մոտակա 8 վանդակներում, էներգիան քչանում է 1֊ով</td>
+            <td>Խոտերին, մոտակա 8 վանդակներում, շարժվելիս էներգիան ավելանում է 2֊ով</td>
+            <td>Բազմանում է մոտակա տարածքներում, երբ էներգիան հավասար է 7-ի</td>
+            <td>Սատկում է, երբ էներգիան փոքր է 0֊ից</td>
+            <td id="grassEaterCount"></td>
+        </tr>
+        <tr>
+            <td class="legend-color" style="background-color:red"></td>
+            <td>Գիշատիչ</td>
+            <td>Մոտակա 8 վանդակներում, էներգիան քչանում է 2֊ով</td>
+            <td>Խոտակերներին, մոտակա 8 վանդակներում, շարժվելիս էներգիան ավելանում է 3֊ով</td>
+            <td>Բազմանում է մոտակա տարածքներում, երբ էներգիան 10֊ից ավել է</td>
+            <td>Սատկում է, երբ էներգիան փոքր է 0֊ից</td>
+            <td id="predatorCount"></td>
+        </tr>
+
+        <tr>
+            <td class="legend-color" style="background-color:cyan"></td>
+            <td>Կերպար 1</td>
+            <td>Մոտակա 16 վանդակներում, էներգիան քչանում է 1֊ով</td>
+            <td>Գիշատիչներին, մոտակա 16 վանդակներում, շարժվելիս էներգիան ավելանում է 2֊ով,
+                հպվելով գիշատիչներին վերջիններս դարձնում է խոտակեր
+            </td>
+            <td>Բազմանում է մոտակա տարածքներում, երբ էներգիան 10֊ից ավել է</td>
+            <td>Սատկում է, երբ էներգիան փոքր է 0֊ից</td>
+            <td></td>
+        </tr>
+
+        <tr>
+            <td class="legend-color"></td>
+            <td>Կերպար 2</td>
+            <td>Մոտակա 16 վանդակներում, էներգիան քչանում է 1֊ով</td>
+            <td>Գիշատիչին և կերպար 1-ին, մոտակա 16 վանդակներում, շարժվելիս էներգիան ավելանում է 3֊ով</td>
+            <td>Բազմանում է մոտակա տարածքներում, երբ էներգիան 8֊ից ավել է</td>
+            <td>Սատկում է, երբ էներգիան փոքր է 0֊ից</td>
+            <td></td>
+        </tr>
+
+    </table>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.14/p5.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="script.js"></script>
+</body>
+
 </html>

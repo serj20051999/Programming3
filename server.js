@@ -2,6 +2,7 @@ var express = require('express');
 var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
+var fs = require("fs");
 
 app.use(express.static("."));
 app.get('/', function (req, res) {
@@ -66,7 +67,7 @@ Predator = require("./Predator.js");
 Change = require("./Change.js");
 Monster = require("./Monster.js");
 
-matrix = matrixGenerator(80, 500, 50, 30, 150, 50);
+matrix = matrixGenerator(50, 500, 50, 30, 150, 50);
 
 for (let y = 0; y < matrix.length; y++) {
     for (let x = 0; x < matrix[y].length; x++) {
@@ -97,21 +98,24 @@ for (let y = 0; y < matrix.length; y++) {
 }
 function getWeather() {
     weatherinit++;
-    if (weatherinit == 1) {
+    if (weatherinit == 5) {
+        weatherinit = 1
         weather = "Summer"
     }
-    
+
+    else if (weatherinit == 1) {
+        weather = "Summer"
+    }
+
     else if (weatherinit == 2) {
         weather = "Spring"
     }
+
     else if (weatherinit == 3) {
         weather = "Autumn"
     }
     else if (weatherinit == 4) {
         weather = "Winter"
-    }
-    else  {
-        weatherinit = 1
     }
 
 
@@ -145,7 +149,7 @@ function drawserver() {
 
         }
     }
-    io.sockets.emit("data", sendData);
+
     let sendData = {
         matrix: matrix,
         grassCounter: grassHashiv,
@@ -153,11 +157,85 @@ function drawserver() {
         predatorCounter: predatorHashiv,
         weatherserver: weather
     }
+    io.sockets.emit("data", sendData);
 
+    io.on("connection", function (socket) {
+        
+        socket.on("fire", function (arr) {
+            
+            var x = arr[0];
+            var y = arr[1];
+            
+            var directions = [
+                [x - 1, y - 1],
+                [x, y - 1],
+                [x + 1, y - 1],
+                [x - 1, y],
+                [x + 1, y],
+                [x - 1, y + 1],
+                [x, y + 1],
+                [x + 1, y + 1]
+            ];
    
-   
+            if (matrix[y][x] == 1) {
+                for (var i in grassArr) {
+                    if (y === grassArr[i].y && x === grassArr[i].x) {
+                        grassArr.splice(i, 1);
+                        break;
+                    };
+                }
+            } else if (matrix[y][x] == 2) {
+                for (var i in grassEaterArr) {
+                    if (y === grassEaterArr[i].y && x === grassEaterArr[i].x) {
+                        grassEaterArr.splice(i, 1);
+                        break;
+                    };
+                }
+            }
+           
+            matrix[y][x] = 0;
+            for (var i in directions) {
+                let harevanx = directions[i][0];
+                let harecvany = directions[i][1];
+    
+                if (matrix[harecvany][harevanx] == 1) {
+                    for (var i in grassArr) {
+                        if (y === grassArr[i].y && x === grassArr[i].x) {
+                            grassArr.splice(i, 1);
+                            break;
+                        };
+                    }
+                } else if (matrix[harecvany][harevanx] == 2) {
+                    for (var i in grassEaterArr) {
+                        if (y === grassEaterArr[i].y && x === grassEaterArr[i].x) {
+                            grassEaterArr.splice(i, 1);
+                            break;
+                        };
+                    }
+                }
+                matrix[harecvany][harevanx] = 0;
+            }
+    
+            io.sockets.emit("data", sendData);
+        });
+    
+    
+    });
 }
 
 
+var obj = { "info": [] };
+
+function writefile() {
+    var fileName = "Statics.json";
+    obj.info.push({
+        "cnvac xoteri qanak ": grassHashiv,
+        "cnvac xotakerneri qanak ": grassEaterHashiv,
+        "cnvac predatorneri qanak ": predatorHashiv
+    });
+    fs.writeFileSync(fileName, JSON.stringify(obj, null, 3));
+}
+
 setInterval(getWeather, 3000);
-setInterval(drawserver, 1000)
+setInterval(drawserver, 1000);
+setInterval(writefile, 6000);
