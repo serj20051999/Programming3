@@ -181,6 +181,7 @@ function drawserver() {
                 for (var i in grassArr) {
                     if (y === grassArr[i].y && x === grassArr[i].x) {
                         grassArr.splice(i, 1);
+                        grassHashiv--
                         break;
                     };
                 }
@@ -188,6 +189,7 @@ function drawserver() {
                 for (var i in grassEaterArr) {
                     if (y === grassEaterArr[i].y && x === grassEaterArr[i].x) {
                         grassEaterArr.splice(i, 1);
+                        grassEaterHashiv--
                         break;
                     };
                 }
@@ -202,6 +204,7 @@ function drawserver() {
                     for (var i in grassArr) {
                         if (y === grassArr[i].y && x === grassArr[i].x) {
                             grassArr.splice(i, 1);
+                            grassHashiv--
                             break;
                         };
                     }
@@ -209,6 +212,7 @@ function drawserver() {
                     for (var i in grassEaterArr) {
                         if (y === grassEaterArr[i].y && x === grassEaterArr[i].x) {
                             grassEaterArr.splice(i, 1);
+                            grassEaterHashiv--
                             break;
                         };
                     }
